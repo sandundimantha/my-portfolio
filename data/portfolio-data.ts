@@ -494,6 +494,8 @@ export const floatingBadges = [
   { name: 'Java', icon: FaJava, color: '#ED8B00' },
   { name: 'Python', icon: FaPython, color: '#3776AB' },
   { name: 'Google Cloud', icon: SiGooglecloud, color: '#4285F4' },
+  { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+  { name: 'Kotlin', icon: SiKotlin, color: '#7F52FF' },
 ];
 
 // ─── Project Tags ──────────────────────────────────────────────
