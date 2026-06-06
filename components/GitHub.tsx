@@ -112,8 +112,30 @@ export default function GitHub() {
           console.warn("Failed fetching official pins, falling back to star-based pinning", e);
         }
 
-        // Fallback: If pinning endpoint fails, treat top-starred / non-forks as pinned
-        if (pins.length === 0) {
+        // Fallback or override: Match against actual user pinned repos by name
+        // We ensure that your actual pinned repo names match correctly
+        const pinnedRepoNames = [
+          'my-portfolio',
+          'test-3d-portfolio',
+          'IT23827080-ITPM-Assignment-01',
+          'it3030-paf-2026-smart-campus-group54',
+          'it3030-paf-2026-smart-campus-IT23827080',
+          'it3030-paf-2026-smart-campus-group55'
+        ];
+
+        // Find repositories that match these names exactly from all public repos
+        const matchedPins = allRepos.filter(r => 
+          pinnedRepoNames.some(name => r.name.toLowerCase() === name.toLowerCase())
+        );
+
+        if (matchedPins.length > 0) {
+          // Sort them according to the preference order defined above
+          pins = matchedPins.sort((a, b) => {
+            const indexA = pinnedRepoNames.findIndex(name => a.name.toLowerCase() === name.toLowerCase());
+            const indexB = pinnedRepoNames.findIndex(name => b.name.toLowerCase() === name.toLowerCase());
+            return indexA - indexB;
+          });
+        } else if (pins.length === 0) {
           pins = [...allRepos]
             .filter(r => !r.fork)
             .sort((a, b) => b.stargazers_count - a.stargazers_count)
