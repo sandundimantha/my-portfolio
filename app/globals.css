@@ -501,3 +501,71 @@ body {
 .react-activity-calendar {
   max-width: 100%;
 }
+
+/* ─── Running Light Cards ──────────────────────────────────── */
+.running-light-card {
+  position: relative;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+/* Outer border wrapper that acts as the container of the gradient light */
+.running-light-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    transparent,
+    rgba(59, 130, 246, 0.1),
+    var(--primary),
+    var(--secondary),
+    transparent,
+    transparent
+  );
+  animation: rotate-light 4s linear infinite;
+  z-index: -2;
+}
+
+/* Inner overlay to mask the center of the card, showing only a 1px border */
+.running-light-card::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--bg-secondary);
+  border-radius: inherit;
+  z-index: -1;
+  transition: background 0.3s ease;
+}
+
+.running-light-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+}
+
+.running-light-card:hover::before {
+  animation-duration: 2s; /* speed up on hover */
+  background: conic-gradient(
+    transparent,
+    rgba(6, 182, 212, 0.2),
+    var(--accent),
+    var(--secondary),
+    var(--primary),
+    transparent,
+    transparent
+  );
+}
+
+@keyframes rotate-light {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+

@@ -138,19 +138,15 @@ export default function Hero() {
           <SectionWrapper delay={0.3}>
             <div className="relative flex justify-center">
               <motion.div
-                className="float-animation"
+                className="float-animation running-light-card"
                 style={{
                   width: 280,
                   height: 280,
                   borderRadius: '50%',
                   overflow: 'hidden',
-                  border: '3px solid var(--border-color)',
                   position: 'relative',
                 }}
               >
-                <div className="pulse-glow" style={{
-                  position: 'absolute', inset: -3, borderRadius: '50%', zIndex: -1,
-                }} />
                 <Image
                   src="/profile.jpg"
                   alt="Sandun Dimantha"
