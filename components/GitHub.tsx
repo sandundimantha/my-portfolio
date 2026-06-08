@@ -170,7 +170,7 @@ export default function GitHub() {
       <div className="section-container">
         <SectionWrapper>
           <div className="text-center mb-16">
-            <h2 className="section-title gradient-text">GitHub Activity</h2>
+            <h2 className="section-title gradient-text">Top Repositories</h2>
             <p className="section-subtitle mx-auto">My open-source contributions and real-time repositories</p>
           </div>
         </SectionWrapper>
@@ -265,9 +265,6 @@ export default function GitHub() {
 
             {/* Top Repos */}
             <SectionWrapper delay={0.3}>
-              <h3 className="font-semibold mb-6" style={{ color: 'var(--text-primary)' }}>
-                {showAll ? 'All Repositories' : 'Top & Pinned Repositories'}
-              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {loading ? (
                   Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
