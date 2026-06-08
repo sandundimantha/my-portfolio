@@ -38,7 +38,7 @@ export default function About() {
     <section id="about" className="section">
       <div className="section-container">
         <SectionWrapper>
-          <div className="text-center mb-16">
+          <div className="text-center" style={{ marginBottom: '64px' }}>
             <h2 className="section-title gradient-text">Who I Am</h2>
             <p className="section-subtitle mx-auto">A passionate developer building the future with code</p>
           </div>
@@ -46,19 +46,20 @@ export default function About() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <SectionWrapper delay={0.1}>
-            <div className="glass-card-static p-8">
+            <div className="glass-card-static" style={{ padding: '32px' }}>
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: '1.05rem' }}>
                 {personalInfo.about}
               </p>
             </div>
           </SectionWrapper>
-
+ 
           <SectionWrapper delay={0.2}>
             <div className="grid grid-cols-2 gap-4">
               {personalInfo.stats.map((stat, i) => (
                 <motion.div
                   key={stat.label}
-                  className="glass-card p-6 text-center"
+                  className="glass-card text-center"
+                  style={{ padding: '24px' }}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}

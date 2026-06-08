@@ -60,7 +60,7 @@ export default function Hero() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
                 style={{ color: 'var(--text-secondary)' }}
-                className="text-lg mb-2 font-medium"
+                className="text-lg mb-4 font-medium"
               >
                 Hi, I&apos;m
               </motion.p>
@@ -69,7 +69,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-5xl md:text-7xl font-bold leading-tight mb-4"
+                className="text-5xl md:text-7xl font-bold leading-snug mb-6"
               >
                 <span className="gradient-text">{personalInfo.name}</span>
               </motion.h1>
@@ -79,7 +79,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
                 style={{ color: 'var(--text-secondary)' }}
-                className="text-xl mb-2"
+                className="text-xl mb-3 font-semibold"
               >
                 {personalInfo.title}
               </motion.p>
@@ -89,7 +89,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.45 }}
                 style={{ color: 'var(--text-secondary)', opacity: 0.8 }}
-                className="text-base mb-6"
+                className="text-base mb-8"
               >
                 {personalInfo.subtitle}
               </motion.p>
@@ -98,7 +98,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="text-2xl font-semibold mb-8"
+                className="text-2xl font-semibold mb-10"
                 style={{ minHeight: 40 }}
               >
                 <TypeWriter texts={personalInfo.typingTexts} />
@@ -108,15 +108,15 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="flex flex-wrap gap-3"
+                className="flex flex-col sm:flex-row gap-4"
               >
-                <button onClick={handleResumeDownload} className="btn-primary">
+                <button onClick={handleResumeDownload} className="btn-primary" style={{ justifyContent: 'center' }}>
                   <FaDownload /> Download Resume
                 </button>
-                <a href="#featured-projects" className="btn-outline">
+                <a href="#featured-projects" className="btn-outline" style={{ justifyContent: 'center' }}>
                   <FaEye /> View Projects
                 </a>
-                <a href="#contact" className="btn-outline">
+                <a href="#contact" className="btn-outline" style={{ justifyContent: 'center' }}>
                   <FaEnvelope /> Contact Me
                 </a>
               </motion.div>

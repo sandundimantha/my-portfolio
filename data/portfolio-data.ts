@@ -10,7 +10,8 @@ import {
   SiMongodb, SiExpress, SiMysql, SiPostgresql,
   SiKotlin, SiSpringboot, SiPostman,
   SiAndroidstudio, SiGooglecloud, SiStripe, SiJsonwebtokens,
-  SiNodedotjs
+  SiNodedotjs, SiFirebase, SiDocker, SiCplusplus,
+  SiLaravel, SiBootstrap
 } from 'react-icons/si';
 import { IconType } from 'react-icons';
 
@@ -76,15 +77,30 @@ export interface TechItem {
 
 export const techStack: TechItem[] = [
   { name: 'React', icon: FaReact, color: '#61DAFB' },
-  { name: 'Next.js', icon: SiNextdotjs, color: '#FFFFFF' },
   { name: 'Node.js', icon: FaNodeJs, color: '#339933' },
-  { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
+  { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+  { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E' },
+  { name: 'Kotlin', icon: SiKotlin, color: '#7F52FF' },
   { name: 'Java', icon: FaJava, color: '#ED8B00' },
   { name: 'Spring Boot', icon: SiSpringboot, color: '#6DB33F' },
   { name: 'Python', icon: FaPython, color: '#3776AB' },
+  { name: 'C++', icon: SiCplusplus, color: '#00599C' },
   { name: 'Google Cloud', icon: SiGooglecloud, color: '#4285F4' },
-  { name: 'Kotlin', icon: SiKotlin, color: '#7F52FF' },
-  { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+  { name: 'MongoDB', icon: SiMongodb, color: '#47A248' },
+  { name: 'MySQL', icon: SiMysql, color: '#4479A1' },
+  { name: 'PostgreSQL', icon: SiPostgresql, color: '#4169E1' },
+  { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4' },
+  { name: 'Bootstrap', icon: SiBootstrap, color: '#7952B3' },
+  { name: 'HTML5', icon: FaHtml5, color: '#E34F26' },
+  { name: 'CSS3', icon: FaCss3Alt, color: '#1572B6' },
+  { name: 'PHP', icon: FaPhp, color: '#777BB4' },
+  { name: 'Laravel', icon: SiLaravel, color: '#FF2D20' },
+  { name: 'Express.js', icon: SiExpress, color: '#828282' },
+  { name: 'Android', icon: FaAndroid, color: '#3DDC84' },
+  { name: 'Docker', icon: SiDocker, color: '#2496ED' },
+  { name: 'Firebase', icon: SiFirebase, color: '#FFCA28' },
+  { name: 'Git', icon: FaGitAlt, color: '#F05032' },
+  { name: 'Postman', icon: SiPostman, color: '#FF6C37' },
 ];
 
 // ─── Skills ────────────────────────────────────────────────────
@@ -108,6 +124,7 @@ export const skillCategories: SkillCategory[] = [
       { name: 'React', level: 90, icon: FaReact },
       { name: 'Next.js', level: 80, icon: SiNextdotjs },
       { name: 'Tailwind CSS', level: 85, icon: SiTailwindcss },
+      { name: 'Bootstrap', level: 80, icon: SiBootstrap },
       { name: 'HTML', level: 95, icon: FaHtml5 },
       { name: 'CSS', level: 90, icon: FaCss3Alt },
       { name: 'JavaScript', level: 90, icon: SiJavascript },
@@ -123,6 +140,8 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Java', level: 80, icon: FaJava },
       { name: 'Spring Boot', level: 70, icon: SiSpringboot },
       { name: 'PHP', level: 65, icon: FaPhp },
+      { name: 'Laravel', level: 70, icon: SiLaravel },
+      { name: 'C++', level: 75, icon: SiCplusplus },
     ],
   },
   {
@@ -147,6 +166,7 @@ export const skillCategories: SkillCategory[] = [
     icon: FaCloud,
     skills: [
       { name: 'Google Cloud', level: 75, icon: SiGooglecloud },
+      { name: 'Firebase', level: 82, icon: SiFirebase },
     ],
   },
   {
@@ -155,6 +175,7 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: 'Git', level: 90, icon: FaGitAlt },
       { name: 'GitHub', level: 90, icon: FaGithub },
+      { name: 'Docker', level: 75, icon: SiDocker },
       { name: 'VS Code', level: 92, icon: FaCode },
       { name: 'Postman', level: 85, icon: SiPostman },
       { name: 'Android Studio', level: 75, icon: SiAndroidstudio },

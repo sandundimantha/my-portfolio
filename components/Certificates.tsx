@@ -17,7 +17,7 @@ export default function Certificates() {
     <section id="certificates" className="section">
       <div className="section-container">
         <SectionWrapper>
-          <div className="text-center mb-12">
+          <div className="text-center" style={{ marginBottom: '64px' }}>
             <h2 className="section-title gradient-text">Certificates & Achievements</h2>
             <p className="section-subtitle mx-auto">Professional certifications I&apos;ve earned</p>
           </div>
@@ -25,7 +25,7 @@ export default function Certificates() {
 
         {/* Filter */}
         <SectionWrapper delay={0.1}>
-          <div className="flex flex-wrap gap-2 justify-center mb-10">
+          <div className="flex flex-wrap justify-center" style={{ gap: '8px', marginBottom: '40px' }}>
             {certificateCategories.map((cat) => (
               <button
                 key={cat}
@@ -51,7 +51,7 @@ export default function Certificates() {
         </SectionWrapper>
 
         {/* Certificate Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ gap: '24px' }}>
           {filtered.map((cert, i) => (
             <motion.div
               key={cert.title}
@@ -78,7 +78,7 @@ export default function Certificates() {
                   )}
                 </div>
 
-                <div className="p-4 flex-1 flex flex-col">
+                <div className="flex-1 flex flex-col" style={{ padding: '20px' }}>
                   <h4 className="font-semibold text-sm mb-1" style={{ color: 'var(--text-primary)' }}>
                     {cert.title}
                   </h4>

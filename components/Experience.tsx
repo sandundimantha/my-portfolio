@@ -8,7 +8,7 @@ export default function Experience() {
     <section id="experience" className="section">
       <div className="section-container">
         <SectionWrapper>
-          <div className="text-center mb-16">
+          <div className="text-center" style={{ marginBottom: '64px' }}>
             <h2 className="section-title gradient-text">Experience</h2>
             <p className="section-subtitle mx-auto">My journey in software development so far</p>
           </div>
@@ -18,7 +18,8 @@ export default function Experience() {
           {experiences.map((exp, i) => (
             <SectionWrapper key={exp.type} delay={0.15 * i}>
               <motion.div
-                className="glass-card p-6 h-full"
+                className="glass-card h-full"
+                style={{ padding: '24px' }}
                 whileHover={{ scale: 1.02 }}
               >
                 <div

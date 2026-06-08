@@ -37,11 +37,11 @@ const languageColors: Record<string, string> = {
 
 function SkeletonCard() {
   return (
-    <div className="glass-card-static p-6 h-[200px] flex flex-col justify-between">
+    <div className="glass-card-static flex flex-col justify-between" style={{ padding: '26px', height: 220 }}>
       <div>
-        <div className="skeleton" style={{ height: 20, width: '70%', marginBottom: 12 }} />
-        <div className="skeleton" style={{ height: 14, width: '100%', marginBottom: 8 }} />
-        <div className="skeleton" style={{ height: 14, width: '60%' }} />
+        <div className="skeleton" style={{ height: 20, width: '70%', marginBottom: 20 }} />
+        <div className="skeleton" style={{ height: 12, width: '90%', marginBottom: 12 }} />
+        <div className="skeleton" style={{ height: 12, width: '80%' }} />
       </div>
       <div className="flex gap-4 pt-4 border-t border-[rgba(255,255,255,0.05)]">
         <div className="skeleton" style={{ height: 14, width: 60 }} />
@@ -59,6 +59,7 @@ export default function GitHub() {
   const [showAll, setShowAll] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [repoLanguages, setRepoLanguages] = useState<Record<string, Record<string, number>>>({});
 
   useEffect(() => {
     setMounted(true);
@@ -123,28 +124,85 @@ export default function GitHub() {
           'it3030-paf-2026-smart-campus-group55'
         ];
 
+        // Predefined beautiful descriptions for your repositories to avoid fetching raw README lines
+        const repoDescriptions: Record<string, string> = {
+          'my-portfolio': 'A modern, interactive Full Stack Developer portfolio built using Next.js 15, Framer Motion, and Tailwind CSS.',
+          'test-3d-portfolio': 'An experimental developer portfolio project utilizing 3D assets and responsive styling options.',
+          'IT23827080-ITPM-Assignment-01': 'Automated Transliteration Accuracy Testing for a Singlish-to-Sinhala Chat Translator using Playwright.',
+          'it3030-paf-2026-smart-campus-group54': 'A Smart Campus facility booking management platform built as a PAF group assignment.',
+          'it3030-paf-2026-smart-campus-it23827080': 'Facility operations hub designed with Spring Boot REST API backend and React frontend.',
+          'it3030-paf-2026-smart-campus-group55': 'Smart Campus Operations Hub for room bookings, maintenance ticket creation, and notifications.',
+        };
+
         // Find repositories that match these names exactly from all public repos
         const matchedPins = allRepos.filter(r => 
           pinnedRepoNames.some(name => r.name.toLowerCase() === name.toLowerCase())
         );
 
         if (matchedPins.length > 0) {
-          // Sort them according to the preference order defined above
+          // Sort them according to the preference order defined above and map custom clean descriptions
           pins = matchedPins.sort((a, b) => {
             const indexA = pinnedRepoNames.findIndex(name => a.name.toLowerCase() === name.toLowerCase());
             const indexB = pinnedRepoNames.findIndex(name => b.name.toLowerCase() === name.toLowerCase());
             return indexA - indexB;
-          });
+          }).map(r => ({
+            ...r,
+            description: repoDescriptions[r.name.toLowerCase()] || r.description || 'No description provided.'
+          }));
         } else if (pins.length === 0) {
           pins = [...allRepos]
             .filter(r => !r.fork)
             .sort((a, b) => b.stargazers_count - a.stargazers_count)
-            .slice(0, 6);
+            .slice(0, 6)
+            .map(r => ({
+              ...r,
+              description: repoDescriptions[r.name.toLowerCase()] || r.description || 'No description provided.'
+            }));
         }
 
         setPinnedRepos(pins);
-        // Save full repo lists (excluding forks, sorted by updated time)
-        setRepos(allRepos.filter(r => !r.fork));
+        // Save full repo lists and map custom descriptions
+        setRepos(allRepos.filter(r => !r.fork).map(r => ({
+          ...r,
+          description: repoDescriptions[r.name.toLowerCase()] || r.description || 'No description provided.'
+        })));
+
+        // Fetch languages for all displayed pins to show breakdown inside each box
+        const langDataMap: Record<string, Record<string, number>> = {};
+        const defaultPinnedLangs: Record<string, Record<string, number>> = {
+          'my-portfolio': { TypeScript: 76, JavaScript: 20, CSS: 4 },
+          'test-3d-portfolio': { JavaScript: 88, CSS: 9, HTML: 3 },
+          'it23827080-itpm-assignment-01': { Python: 100 },
+          'it3030-paf-2026-smart-campus-group54': { Java: 60, JavaScript: 35, HTML: 5 },
+          'it3030-paf-2026-smart-campus-it23827080': { Java: 65, TypeScript: 30, HTML: 5 },
+          'it3030-paf-2026-smart-campus-group55': { Java: 58, TypeScript: 32, HTML: 10 }
+        };
+
+        // Initialize with default fallback values
+        Object.keys(defaultPinnedLangs).forEach(key => {
+          langDataMap[key] = defaultPinnedLangs[key];
+        });
+
+        // Try to fetch dynamically for pins
+        for (const repo of pins) {
+          try {
+            const res = await fetch(`https://api.github.com/repos/${username}/${repo.name}/languages`);
+            if (res.ok) {
+              const data = await res.json();
+              const total = Object.values(data).reduce((a: any, b: any) => a + b, 0) as number;
+              if (total > 0) {
+                const pctMap: Record<string, number> = {};
+                Object.entries(data).forEach(([lang, val]) => {
+                  pctMap[lang] = Math.round(((val as number) / total) * 100);
+                });
+                langDataMap[repo.name.toLowerCase()] = pctMap;
+              }
+            }
+          } catch (e) {
+            console.warn(`Could not fetch languages for ${repo.name}`, e);
+          }
+        }
+        setRepoLanguages(langDataMap);
       } catch {
         setError(true);
       } finally {
@@ -169,7 +227,7 @@ export default function GitHub() {
     <section id="github" className="section">
       <div className="section-container">
         <SectionWrapper>
-          <div className="text-center mb-16">
+          <div className="text-center" style={{ marginBottom: '64px' }}>
             <h2 className="section-title gradient-text">Top Repositories</h2>
             <p className="section-subtitle mx-auto">My open-source contributions and real-time repositories</p>
           </div>
@@ -189,24 +247,24 @@ export default function GitHub() {
           <>
             {/* Stats Row */}
             <SectionWrapper delay={0.1}>
-              <div className="grid grid-cols-3 gap-4 mb-10">
+              <div className="grid grid-cols-3" style={{ marginBottom: '40px', gap: '16px' }}>
                 {loading ? (
                   <>  
-                    <div className="glass-card-static p-5 text-center"><div className="skeleton mx-auto" style={{ height: 32, width: 60, marginBottom: 8 }} /><div className="skeleton mx-auto" style={{ height: 14, width: 80 }} /></div>
-                    <div className="glass-card-static p-5 text-center"><div className="skeleton mx-auto" style={{ height: 32, width: 60, marginBottom: 8 }} /><div className="skeleton mx-auto" style={{ height: 14, width: 80 }} /></div>
-                    <div className="glass-card-static p-5 text-center"><div className="skeleton mx-auto" style={{ height: 32, width: 60, marginBottom: 8 }} /><div className="skeleton mx-auto" style={{ height: 14, width: 80 }} /></div>
+                    <div className="glass-card-static text-center" style={{ padding: '20px' }}><div className="skeleton mx-auto" style={{ height: 32, width: 60, marginBottom: 8 }} /><div className="skeleton mx-auto" style={{ height: 14, width: 80 }} /></div>
+                    <div className="glass-card-static text-center" style={{ padding: '20px' }}><div className="skeleton mx-auto" style={{ height: 32, width: 60, marginBottom: 8 }} /><div className="skeleton mx-auto" style={{ height: 14, width: 80 }} /></div>
+                    <div className="glass-card-static text-center" style={{ padding: '20px' }}><div className="skeleton mx-auto" style={{ height: 32, width: 60, marginBottom: 8 }} /><div className="skeleton mx-auto" style={{ height: 14, width: 80 }} /></div>
                   </>
                 ) : user && (
                   <>
-                    <motion.div className="glass-card p-5 text-center" whileHover={{ scale: 1.03 }}>
+                    <motion.div className="glass-card text-center" whileHover={{ scale: 1.03 }} style={{ padding: '20px' }}>
                       <p className="text-3xl font-bold gradient-text">{user.public_repos}</p>
                       <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Repositories</p>
                     </motion.div>
-                    <motion.div className="glass-card p-5 text-center" whileHover={{ scale: 1.03 }}>
+                    <motion.div className="glass-card text-center" whileHover={{ scale: 1.03 }} style={{ padding: '20px' }}>
                       <p className="text-3xl font-bold gradient-text">{user.followers}</p>
                       <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Followers</p>
                     </motion.div>
-                    <motion.div className="glass-card p-5 text-center" whileHover={{ scale: 1.03 }}>
+                    <motion.div className="glass-card text-center" whileHover={{ scale: 1.03 }} style={{ padding: '20px' }}>
                       <p className="text-3xl font-bold gradient-text">{user.following}</p>
                       <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Following</p>
                     </motion.div>
@@ -217,7 +275,7 @@ export default function GitHub() {
 
             {/* Contribution Calendar */}
             <SectionWrapper delay={0.2}>
-              <div className="glass-card-static p-6 mb-10 overflow-x-auto">
+              <div className="glass-card-static overflow-x-auto" style={{ padding: '24px', marginBottom: '40px' }}>
                 <h3 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Contribution Graph</h3>
                 {mounted ? (
                   <GitHubCalendar
@@ -236,28 +294,38 @@ export default function GitHub() {
             {/* Language Breakdown */}
             {totalLangs > 0 && (
               <SectionWrapper delay={0.25}>
-                <div className="glass-card-static p-6 mb-10">
-                  <h3 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Most Used Languages</h3>
-                  <div className="flex rounded-full overflow-hidden h-3 mb-4">
-                    {Object.entries(languageCounts).map(([lang, count]) => (
-                      <div
-                        key={lang}
-                        style={{
-                          width: `${(count / totalLangs) * 100}%`,
-                          background: languageColors[lang] || '#6B7280',
-                          minWidth: 4,
-                        }}
-                      />
-                    ))}
-                  </div>
-                  <div className="flex flex-wrap gap-4">
-                    {Object.entries(languageCounts).map(([lang, count]) => (
-                      <div key={lang} className="flex items-center gap-2 text-sm">
-                        <div style={{ width: 10, height: 10, borderRadius: '50%', background: languageColors[lang] || '#6B7280' }} />
-                        <span style={{ color: 'var(--text-secondary)' }}>{lang}</span>
-                        <span style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>{((count / totalLangs) * 100).toFixed(0)}%</span>
-                      </div>
-                    ))}
+                <div className="glass-card-static" style={{ padding: '32px', marginBottom: '40px' }}>
+                  <h3 className="font-semibold text-lg mb-6 tracking-wide" style={{ color: 'var(--text-primary)' }}>
+                    Languages Profile
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: '20px 32px' }}>
+                    {Object.entries(languageCounts)
+                      .sort((a, b) => b[1] - a[1])
+                      .map(([lang, count]) => {
+                        const percentage = ((count / totalLangs) * 100).toFixed(0);
+                        const color = languageColors[lang] || '#6B7280';
+                        return (
+                          <div key={lang} className="flex flex-col gap-2">
+                            <div className="flex justify-between items-center text-sm font-medium">
+                              <span className="flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                                <span style={{ width: 10, height: 10, borderRadius: '50%', background: color, display: 'inline-block' }} />
+                                {lang}
+                              </span>
+                              <span style={{ color: 'var(--text-secondary)' }}>{percentage}%</span>
+                            </div>
+                            <div className="w-full bg-[rgba(255,255,255,0.05)] rounded-full h-2 overflow-hidden">
+                              <motion.div
+                                className="h-full rounded-full"
+                                style={{ background: color }}
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${percentage}%` }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1, ease: 'easeOut' }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
                   </div>
                 </div>
               </SectionWrapper>
@@ -265,7 +333,10 @@ export default function GitHub() {
 
             {/* Top Repos */}
             <SectionWrapper delay={0.3}>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <h3 className="font-semibold text-lg mb-6 tracking-wide" style={{ color: 'var(--text-primary)' }}>
+                {showAll ? 'All Repositories' : 'Pinned Repositories'}
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ gap: '24px' }}>
                 {loading ? (
                   Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
                 ) : (
@@ -275,29 +346,49 @@ export default function GitHub() {
                       href={repo.html_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="running-light-card p-6 flex flex-col justify-between"
+                      className="running-light-card flex flex-col justify-between"
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.1 * (i % 6) }}
-                      style={{ textDecoration: 'none', minHeight: 200 }}
+                      style={{ textDecoration: 'none', minHeight: 220, padding: '26px' }}
                     >
                       <div>
-                        <h4 className="font-semibold mb-3 flex items-center gap-2 text-base tracking-wide" style={{ color: 'var(--text-primary)', lineBreak: 'anywhere' }}>
+                        <h4 className="font-semibold mb-4 flex items-center gap-2 text-base tracking-wide" style={{ color: 'var(--text-primary)', lineBreak: 'anywhere' }}>
                           <FaCodeBranch style={{ color: 'var(--primary)', fontSize: '0.9rem', flexShrink: 0 }} />
                           {repo.name}
                         </h4>
-                        <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)', lineHeight: '1.6', opacity: 0.9 }}>
-                          {repo.description || 'No description provided.'}
-                        </p>
+                        {(() => {
+                          const langs = repoLanguages[repo.name.toLowerCase()] || (repo.language ? { [repo.language]: 100 } : null);
+                          if (!langs) return null;
+                          const entries = Object.entries(langs).sort((a, b) => b[1] - a[1]);
+                          return (
+                            <div className="mt-4 flex flex-col gap-3">
+                              {entries.map(([lang, pct]) => {
+                                const color = languageColors[lang] || '#6B7280';
+                                return (
+                                  <div key={lang} className="flex flex-col gap-1">
+                                    <div className="flex justify-between items-center text-xs">
+                                      <span className="flex items-center gap-1.5" style={{ color: 'var(--text-primary)' }}>
+                                        <span style={{ width: 6, height: 6, borderRadius: '50%', background: color, display: 'inline-block' }} />
+                                        {lang}
+                                      </span>
+                                      <span style={{ color: 'var(--text-secondary)', opacity: 0.8 }}>{pct}%</span>
+                                    </div>
+                                    <div className="w-full bg-[rgba(255,255,255,0.05)] rounded-full h-1 overflow-hidden">
+                                      <div
+                                        className="h-full rounded-full"
+                                        style={{ width: `${pct}%`, background: color }}
+                                      />
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          );
+                        })()}
                       </div>
-                      <div className="flex items-center gap-4 text-xs mt-auto pt-2 border-t border-[rgba(255,255,255,0.05)]" style={{ color: 'var(--text-secondary)' }}>
-                        {repo.language && (
-                          <span className="flex items-center gap-1.5">
-                            <span style={{ width: 8, height: 8, borderRadius: '50%', background: languageColors[repo.language] || '#6B7280', display: 'inline-block' }} />
-                            {repo.language}
-                          </span>
-                        )}
+                      <div className="flex items-center gap-4 text-xs mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]" style={{ color: 'var(--text-secondary)' }}>
                         <span className="flex items-center gap-1"><FaStar /> {repo.stargazers_count}</span>
                         <span className="flex items-center gap-1"><FaCodeBranch /> {repo.forks_count}</span>
                       </div>
@@ -310,7 +401,7 @@ export default function GitHub() {
             {/* Toggle Show All option */}
             {!loading && repos.length > 0 && (
               <SectionWrapper delay={0.35}>
-                <div className="text-center mt-8">
+                <div className="text-center" style={{ marginTop: '32px' }}>
                   <button
                     onClick={() => setShowAll(!showAll)}
                     className="btn-outline"
@@ -332,7 +423,7 @@ export default function GitHub() {
 
             {/* Profile Link */}
             <SectionWrapper delay={0.4}>
-              <div className="text-center mt-6">
+              <div className="text-center" style={{ marginTop: '24px' }}>
                 <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="btn-primary">
                   <FaGithub /> View Full GitHub Profile
                 </a>

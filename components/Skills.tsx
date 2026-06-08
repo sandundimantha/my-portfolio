@@ -34,7 +34,7 @@ export default function Skills() {
     <section id="skills" className="section">
       <div className="section-container">
         <SectionWrapper>
-          <div className="text-center mb-16">
+          <div className="text-center" style={{ marginBottom: '64px' }}>
             <h2 className="section-title gradient-text">Skills & Expertise</h2>
             <p className="section-subtitle mx-auto">Technologies and tools I use to bring ideas to life</p>
           </div>
@@ -43,7 +43,7 @@ export default function Skills() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillCategories.map((category, catIndex) => (
             <SectionWrapper key={category.title} delay={0.1 * catIndex}>
-              <div className="glass-card-static p-6 h-full">
+              <div className="glass-card-static h-full" style={{ padding: '24px' }}>
                 <div className="flex items-center gap-3 mb-6">
                   <div
                     className="flex items-center justify-center"

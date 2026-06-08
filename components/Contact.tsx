@@ -52,7 +52,7 @@ export default function Contact() {
     <section id="contact" className="section">
       <div className="section-container">
         <SectionWrapper>
-          <div className="text-center mb-16">
+          <div className="text-center" style={{ marginBottom: '64px' }}>
             <h2 className="section-title gradient-text">Get In Touch</h2>
             <p className="section-subtitle mx-auto">Feel free to reach out for collaborations or opportunities</p>
           </div>
@@ -68,8 +68,8 @@ export default function Contact() {
                   href={info.href}
                   target={info.href.startsWith('http') ? '_blank' : undefined}
                   rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="glass-card p-5 flex items-start gap-4"
-                  style={{ textDecoration: 'none' }}
+                  className="glass-card flex items-start gap-4"
+                  style={{ textDecoration: 'none', padding: '20px' }}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -98,10 +98,10 @@ export default function Contact() {
 
           {/* Contact Form */}
           <SectionWrapper delay={0.2}>
-            <form ref={formRef} onSubmit={handleSubmit} className="glass-card-static p-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <form ref={formRef} onSubmit={handleSubmit} className="glass-card-static" style={{ padding: '32px' }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: '16px', marginBottom: '16px' }}>
                 <div>
-                  <label className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>Name</label>
+                  <label className="text-sm font-medium block" style={{ color: 'var(--text-secondary)', marginBottom: '8px' }}>Name</label>
                   <input
                     type="text"
                     name="from_name"
@@ -113,7 +113,7 @@ export default function Contact() {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>Email</label>
+                  <label className="text-sm font-medium block" style={{ color: 'var(--text-secondary)', marginBottom: '8px' }}>Email</label>
                   <input
                     type="email"
                     name="from_email"
@@ -125,8 +125,8 @@ export default function Contact() {
                   />
                 </div>
               </div>
-              <div className="mb-4">
-                <label className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>Subject</label>
+              <div style={{ marginBottom: '16px' }}>
+                <label className="text-sm font-medium block" style={{ color: 'var(--text-secondary)', marginBottom: '8px' }}>Subject</label>
                 <input
                   type="text"
                   name="subject"
@@ -137,8 +137,8 @@ export default function Contact() {
                   style={inputStyle}
                 />
               </div>
-              <div className="mb-6">
-                <label className="text-sm font-medium mb-2 block" style={{ color: 'var(--text-secondary)' }}>Message</label>
+              <div style={{ marginBottom: '24px' }}>
+                <label className="text-sm font-medium block" style={{ color: 'var(--text-secondary)', marginBottom: '8px' }}>Message</label>
                 <textarea
                   name="message"
                   required

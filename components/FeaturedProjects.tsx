@@ -15,7 +15,7 @@ export default function FeaturedProjects() {
     <section id="featured-projects" className="section">
       <div className="section-container">
         <SectionWrapper>
-          <div className="text-center mb-16">
+          <div className="text-center" style={{ marginBottom: '64px' }}>
             <h2 className="section-title gradient-text">Featured Projects</h2>
             <p className="section-subtitle mx-auto">Handpicked projects showcasing my best work</p>
           </div>
@@ -41,48 +41,60 @@ export default function FeaturedProjects() {
                 </div>
 
                 {/* Content */}
-                <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="font-bold text-lg mb-2" style={{ color: 'var(--text-primary)' }}>
+                <div className="flex-1 flex flex-col" style={{ padding: '24px' }}>
+                  <h3 className="font-bold text-lg" style={{ color: 'var(--text-primary)', marginBottom: '12px' }}>
                     {project.title}
                   </h3>
-                  <p className="text-sm mb-4 flex-1" style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                  <p className="text-sm flex-1" style={{ color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '16px' }}>
                     {project.description}
                   </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap" style={{ gap: '8px', marginBottom: '16px' }}>
                     {project.technologies.slice(0, 4).map((t) => (
                       <span key={t} className="tech-tag">{t}</span>
                     ))}
                   </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex gap-2">
-                      {project.github && (
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="flex items-center gap-1 text-sm"
-                          style={{ color: 'var(--text-secondary)' }}
-                        >
-                          <FaGithub />
-                        </a>
-                      )}
-                      {project.liveDemo && (
-                        <a
-                          href={project.liveDemo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="flex items-center gap-1 text-sm"
-                          style={{ color: 'var(--primary)' }}
-                        >
-                          <FaExternalLinkAlt />
-                        </a>
-                      )}
-                    </div>
-                    <span className="flex items-center gap-1 text-sm" style={{ color: 'var(--primary)' }}>
-                      View Details <FaArrowRight size={12} />
-                    </span>
+                  <div className="flex items-center" style={{ gap: '16px', marginBottom: '16px', marginTop: '8px' }}>
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex items-center gap-1.5 text-xs hover:text-white transition-colors"
+                        style={{ color: 'var(--text-secondary)' }}
+                      >
+                        <FaGithub size={14} /> GitHub
+                      </a>
+                    )}
+                    {project.liveDemo && (
+                      <a
+                        href={project.liveDemo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex items-center gap-1.5 text-xs hover:text-white transition-colors"
+                        style={{ color: 'var(--primary)' }}
+                      >
+                        <FaExternalLinkAlt size={12} /> Live Demo
+                      </a>
+                    )}
+                  </div>
+                  <div style={{ marginTop: '16px' }}>
+                    <button
+                      className="btn-primary w-full text-center"
+                      style={{
+                        padding: '10px 16px',
+                        fontSize: '0.85rem',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        borderRadius: '10px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      View Details <FaArrowRight size={10} />
+                    </button>
                   </div>
                 </div>
               </motion.div>
@@ -91,8 +103,8 @@ export default function FeaturedProjects() {
         </div>
 
         <SectionWrapper delay={0.5}>
-          <div className="text-center mt-12">
-            <a href="#all-projects" className="btn-outline">
+          <div className="text-center mt-20">
+            <a href="#all-projects" className="btn-primary">
               View All Projects <FaArrowRight />
             </a>
           </div>

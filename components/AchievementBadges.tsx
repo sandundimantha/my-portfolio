@@ -20,7 +20,8 @@ export default function AchievementBadges() {
                   scale: 1.05,
                   boxShadow: `0 0 25px ${badge.color}33`,
                 }}
-                className="glass-card-static flex items-center gap-3 px-5 py-3 cursor-default"
+                className="glass-card-static flex items-center gap-3 cursor-default"
+                style={{ padding: '12px 20px' }}
               >
                 <badge.icon style={{ color: badge.color, fontSize: '1.3rem' }} />
                 <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>

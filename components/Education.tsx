@@ -8,7 +8,7 @@ export default function Education() {
     <section id="education" className="section">
       <div className="section-container">
         <SectionWrapper>
-          <div className="text-center mb-16">
+          <div className="text-center" style={{ marginBottom: '64px' }}>
             <h2 className="section-title gradient-text">Education & Journey</h2>
             <p className="section-subtitle mx-auto">My academic and professional timeline</p>
           </div>
@@ -29,7 +29,8 @@ export default function Education() {
                   {/* Content */}
                   <div className={`flex-1 ${isLeft ? 'md:text-right' : 'md:text-left'} pl-12 md:pl-0`}>
                     <motion.div
-                      className="glass-card p-6"
+                      className="glass-card"
+                      style={{ padding: '24px' }}
                       whileHover={{ scale: 1.02 }}
                     >
                       <span className="text-sm font-semibold" style={{ color: 'var(--primary)' }}>{item.year}</span>

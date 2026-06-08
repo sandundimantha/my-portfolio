@@ -8,7 +8,7 @@ export default function TechStack() {
     <section id="tech-stack" className="section">
       <div className="section-container">
         <SectionWrapper>
-          <div className="text-center mb-16">
+          <div className="text-center" style={{ marginBottom: '64px' }}>
             <h2 className="section-title gradient-text">Technologies I Work With</h2>
             <p className="section-subtitle mx-auto">My go-to tools and technologies for building modern applications</p>
           </div>
@@ -18,7 +18,8 @@ export default function TechStack() {
           {techStack.map((tech, i) => (
             <SectionWrapper key={tech.name} delay={0.05 * i}>
               <motion.div
-                className="glass-card p-6 flex flex-col items-center gap-3 cursor-pointer"
+                className="glass-card flex flex-col items-center gap-3 cursor-pointer"
+                style={{ padding: '24px' }}
                 whileHover={{
                   scale: 1.08,
                   boxShadow: `0 0 30px ${tech.color}33`,

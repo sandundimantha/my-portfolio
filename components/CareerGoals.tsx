@@ -8,7 +8,7 @@ export default function CareerGoals() {
     <section id="career-goals" className="section">
       <div className="section-container">
         <SectionWrapper>
-          <div className="text-center mb-16">
+          <div className="text-center" style={{ marginBottom: '64px' }}>
             <h2 className="section-title gradient-text">My Career Goals</h2>
             <p className="section-subtitle mx-auto">Where I&apos;m headed in my career journey</p>
           </div>
@@ -18,7 +18,8 @@ export default function CareerGoals() {
           {careerGoals.map((goal, i) => (
             <SectionWrapper key={goal.title} delay={0.1 * i}>
               <motion.div
-                className="glass-card p-6 text-center h-full"
+                className="glass-card text-center h-full"
+                style={{ padding: '24px' }}
                 whileHover={{ scale: 1.02 }}
               >
                 <div

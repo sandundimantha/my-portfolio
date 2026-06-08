@@ -24,7 +24,7 @@ export default function AllProjects() {
     <section id="all-projects" className="section">
       <div className="section-container">
         <SectionWrapper>
-          <div className="text-center mb-12">
+          <div className="text-center" style={{ marginBottom: '64px' }}>
             <h2 className="section-title gradient-text">All Projects</h2>
             <p className="section-subtitle mx-auto">Browse my complete project portfolio</p>
           </div>
@@ -32,7 +32,7 @@ export default function AllProjects() {
 
         {/* Search + Filter */}
         <SectionWrapper delay={0.1}>
-          <div className="flex flex-col sm:flex-row gap-4 mb-8 items-center justify-center">
+          <div className="flex flex-col sm:flex-row items-center justify-center" style={{ gap: '16px', marginBottom: '32px' }}>
             <div className="relative w-full sm:w-80">
               <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-secondary)' }} />
               <input
@@ -80,7 +80,7 @@ export default function AllProjects() {
         </SectionWrapper>
 
         {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ gap: '24px' }}>
           {filtered.map((project, i) => (
             <motion.div
               key={project.id}
@@ -99,7 +99,7 @@ export default function AllProjects() {
                   <Image src={project.image} alt={project.title} fill style={{ objectFit: 'cover' }} />
                   <div className="absolute inset-0" style={{ background: 'linear-gradient(transparent 50%, rgba(2,6,23,0.8))' }} />
                 </div>
-                <div className="p-5 flex-1 flex flex-col">
+                <div className="flex-1 flex flex-col" style={{ padding: '20px' }}>
                   <h3 className="font-bold mb-2" style={{ color: 'var(--text-primary)' }}>{project.title}</h3>
                   <p className="text-sm mb-3 flex-1" style={{ color: 'var(--text-secondary)', lineHeight: 1.5 }}>{project.description}</p>
                   <div className="flex flex-wrap gap-2 mb-3">
